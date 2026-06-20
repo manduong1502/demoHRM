@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  hrm-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tiko-hrm-app
+    restart: always
+    ports:
+      - "5005:5000" # Map cổng 5005 của Server thật vào cổng 5000 trong container
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - JWT_SECRET=super-strong-jwt-secret-key-tiko-hrm
+      - DB_STORAGE=/app/server/data/database.sqlite # Đường dẫn DB nằm trong volume
+    volumes:
+      # Mount thư mục chứa file SQLite ra ngoài volume vật lý để tránh mất dữ liệu khi rebuild
+      - hrm_db_data:/app/server/data
+
+volumes:
+  hrm_db_data:
