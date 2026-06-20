@@ -59,33 +59,17 @@ Chúng ta thiết lập cơ chế **Build Frontend tại Local** để server kh
    git clone https://github.com/manduong1502/demoHRM.git demoHRM
    ```
 
-3. **Tạo File Script tự động cập nhật `deploy-hrm.sh`**:
-   Tạo tệp thực thi bên ngoài thư mục dự án để cập nhật nhanh bằng 1 click:
+3. **Sử dụng Script tự động cập nhật `deploy-hrm.sh`**:
+   Tệp script cập nhật nhanh đã được đẩy sẵn ở thư mục gốc của dự án. Bạn chỉ cần sao chép tệp này ra ngoài thư mục làm việc để sử dụng lâu dài:
    ```bash
-   nano /mnt/ssd500/tiko/deploy-hrm.sh
-   ```
-   Dán nội dung script sau vào:
-   ```bash
-   #!/bin/bash
+   # Sao chép script ra ngoài thư mục dự án tiko/
+   cp /mnt/ssd500/tiko/demoHRM/deploy-hrm.sh /mnt/ssd500/tiko/deploy-hrm.sh
    
-   echo "=== 1. CẬP NHẬT CODE TỪ GITHUB ==="
-   cd /mnt/ssd500/tiko/demoHRM
-   sudo git fetch --all && sudo git reset --hard origin/main
-   
-   echo "=== 2. KHỞI CHẠY CONTAINER BẰNG DOCKER ==="
-   sudo docker compose down
-   sudo docker compose up -d --build
-   
-   echo "=== CẬP NHẬT HOÀN TẤT ==="
-   ```
-   *Ấn `Ctrl + O` -> `Enter` -> `Ctrl + X` để lưu và thoát.*
-
-4. **Cấp quyền chạy cho Script**:
-   ```bash
+   # Cấp quyền thực thi cho script
    chmod +x /mnt/ssd500/tiko/deploy-hrm.sh
    ```
 
-5. **Kích hoạt chạy dự án**:
+4. **Kích hoạt chạy dự án**:
    ```bash
    /mnt/ssd500/tiko/deploy-hrm.sh
    ```

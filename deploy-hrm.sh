@@ -1,16 +1,7 @@
 #!/bin/bash
 
-# Kiểm tra xem có đang đứng đúng thư mục dự án không
-PROJECT_DIR="/mnt/ssd500/tiko/demoHRM"
-
-if [ -d "$PROJECT_DIR" ]; then
-    cd "$PROJECT_DIR"
-else
-    echo "Lỗi: Thư mục dự án $PROJECT_DIR không tồn tại!"
-    exit 1
-fi
-
 echo "=== 1. CẬP NHẬT MÃ NGUỒN TỪ GITHUB ==="
+cd /mnt/ssd500/tiko/demoHRM
 sudo git fetch --all
 sudo git reset --hard origin/main
 
