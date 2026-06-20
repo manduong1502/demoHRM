@@ -30,3 +30,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# User guides
+USER_GUIDE.md
