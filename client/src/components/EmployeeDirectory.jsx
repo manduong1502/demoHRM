@@ -45,7 +45,11 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
   const [searchTrigger, setSearchTrigger] = useState(0);
 
   const loadEmployees = async () => {
-    setLoading(true);
+    // Tránh giật màn hình (Skeleton flash) bằng cách chỉ hiện loading nếu API phản hồi lâu hơn 200ms
+    const timer = setTimeout(() => {
+      setLoading(true);
+    }, 200);
+
     try {
       const qs = `?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}&department=${encodeURIComponent(department)}&status=${encodeURIComponent(status)}`;
       const result = await fetchAPI(`/employees${qs}`);
@@ -55,6 +59,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
     } catch (err) {
       console.error(err);
     } finally {
+      clearTimeout(timer);
       setLoading(false);
     }
   };
