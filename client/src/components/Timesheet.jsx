@@ -9,6 +9,7 @@ export default function Timesheet({ fetchAPI, userRole }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [selectedCell, setSelectedCell] = useState(null);
 
   // Local date helper
   const getLocalDateString = (dateInput) => {
@@ -49,6 +50,7 @@ export default function Timesheet({ fetchAPI, userRole }) {
   };
 
   useEffect(() => {
+    setSelectedCell(null);
     loadTimesheet();
   }, [year, month]);
 
@@ -241,7 +243,18 @@ export default function Timesheet({ fetchAPI, userRole }) {
                     }
 
                     return (
-                      <td key={dayNum} className="day-cell" title={tooltip}>
+                      <td
+                        key={dayNum}
+                        className="day-cell"
+                        title={tooltip}
+                        onClick={() => setSelectedCell({
+                          employeeName: emp.fullName,
+                          date: dayDateStr,
+                          record: attRecord,
+                          isWeekend: isWeekend
+                        })}
+                        style={{ cursor: 'pointer' }}
+                      >
                         <div className={`day-cell-content ${cellClass}`}>
                           {symbol}
                         </div>
@@ -253,6 +266,62 @@ export default function Timesheet({ fetchAPI, userRole }) {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Detailed attendance preview card */}
+      <div className={`expandable-panel ${selectedCell ? 'expanded' : ''}`} style={{ marginTop: '1.5rem' }}>
+        {selectedCell && (
+          <div className="widget-card info-box-animate" style={{ borderLeft: '4px solid var(--info)', padding: '1.5rem' }}>
+            <div className="flex-between">
+              <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>
+                Chi tiết chấm công ngày {new Date(selectedCell.date).toLocaleDateString('vi-VN')}
+              </h4>
+              <button
+                onClick={(e) => { e.stopPropagation(); setSelectedCell(null); }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.5rem', color: 'var(--text-muted)', lineHeight: 1 }}
+              >
+                &times;
+              </button>
+            </div>
+            <div className="grid-2" style={{ marginTop: '1rem' }}>
+              <div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Nhân viên</div>
+                <div style={{ fontWeight: 600 }}>{selectedCell.employeeName}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Trạng thái</div>
+                <div>
+                  <span className={`badge badge-${selectedCell.record ? selectedCell.record.status : (selectedCell.isWeekend ? 'weekend' : 'absent')}`}>
+                    {selectedCell.record ? (
+                      selectedCell.record.status === 'late' ? 'Đi muộn' :
+                      selectedCell.record.status === 'early' ? 'Về sớm' :
+                      selectedCell.record.status === 'absent' ? 'Vắng mặt không phép' :
+                      selectedCell.record.status === 'leave_paid' ? 'Nghỉ phép năm' :
+                      selectedCell.record.status === 'leave_unpaid' ? 'Nghỉ không lương' : 'Đúng giờ'
+                    ) : (selectedCell.isWeekend ? 'Ngày nghỉ cuối tuần' : 'Vắng mặt / Chưa có dữ liệu')}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {selectedCell.record && (
+              <div className="grid-2" style={{ marginTop: '1rem', borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
+                <div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Thời gian Check-In / Check-Out</div>
+                  <div style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>
+                    ⏰ <strong>Check-In:</strong> {selectedCell.record.checkIn || '-'} | <strong>Check-Out:</strong> {selectedCell.record.checkOut || '-'}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Số giờ OT / Ghi chú</div>
+                  <div style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>
+                    ⚡ <strong>Tăng ca OT:</strong> {selectedCell.record.otHours || 0} giờ | <strong>Ghi chú:</strong> {selectedCell.record.notes || 'Không có'}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

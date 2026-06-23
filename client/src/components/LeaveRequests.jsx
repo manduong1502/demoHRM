@@ -175,6 +175,26 @@ export default function LeaveRequests({ fetchAPI, userRole, showToast }) {
               <option value="ot">Làm thêm giờ (Tăng ca OT)</option>
             </select>
           </div>
+
+          <div className="expandable-panel expanded" style={{ marginBottom: '1.25rem' }}>
+            <div className="info-box-animate" key={requestType}>
+              {requestType === 'leave_paid' && (
+                <div className="alert-info-light">
+                  <strong>💡 Quy định nghỉ phép năm:</strong> Nhân viên được hưởng nguyên lương. Đơn cần được gửi và duyệt trước ngày nghỉ tối thiểu 1 ngày.
+                </div>
+              )}
+              {requestType === 'leave_unpaid' && (
+                <div className="alert-info-light warning-alert">
+                  <strong>⚠️ Quy định phép không lương:</strong> Ngày nghỉ sẽ trừ trực tiếp vào công thực tế của tháng. Cần có sự đồng ý của Quản lý trực tiếp.
+                </div>
+              )}
+              {requestType === 'ot' && (
+                <div className="alert-info-light info-alert">
+                  <strong>⏰ Quy định làm thêm giờ (OT):</strong> Hệ số tính lương OT là 1.5x (ngày thường), 2.0x (cuối tuần), 3.0x (ngày lễ). Vui lòng điền đúng số giờ thực tế làm việc.
+                </div>
+              )}
+            </div>
+          </div>
           <div className="form-group">
             <label>Từ ngày / Ngày tăng ca</label>
             <input

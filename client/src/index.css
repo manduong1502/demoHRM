@@ -1385,3 +1385,58 @@ select.form-control {
   border: 1px solid rgba(236, 72, 153, 0.15);
 }
 
+/* Expandable Panel transition */
+.expandable-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.28s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease-out;
+}
+
+.expandable-panel.expanded {
+  max-height: 380px; /* High enough to contain fields/details */
+  opacity: 1;
+}
+
+.expandable-content {
+  padding-top: 0.25rem;
+}
+
+/* Dynamic details alert box */
+.info-box-animate {
+  animation: slideDownFade 0.24s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.alert-info-light {
+  padding: 0.85rem 1.125rem;
+  border-radius: 8px;
+  background-color: rgba(79, 70, 229, 0.05);
+  border: 1px solid rgba(79, 70, 229, 0.1);
+  color: #4f46e5;
+  font-size: 0.825rem;
+  line-height: 1.45;
+}
+
+.alert-info-light.warning-alert {
+  background-color: rgba(234, 88, 12, 0.05);
+  border-color: rgba(234, 88, 12, 0.1);
+  color: #ea580c;
+}
+
+.alert-info-light.info-alert {
+  background-color: rgba(37, 99, 235, 0.05);
+  border-color: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

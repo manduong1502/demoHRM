@@ -37,6 +37,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
   // Portal account fields
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [createAccount, setCreateAccount] = useState(false);
 
   // Import file
   const [importFile, setImportFile] = useState(null);
@@ -119,6 +120,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
     setOfficialDate('');
     setUsername('');
     setPassword('');
+    setCreateAccount(false);
     setIsEmpModalOpen(true);
   };
 
@@ -177,7 +179,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
         showToast('Cập nhật hồ sơ thành công.');
       } else {
         // Create Profile (optimized: User registration first if portal fields entered)
-        if (username.trim() && password) {
+        if (createAccount && username.trim() && password) {
           const userResponse = await fetchAPI('/auth/register', {
             method: 'POST',
             body: JSON.stringify({
@@ -498,16 +500,33 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
 
               {/* Portal accounts creation */}
               {!currentEmpId && (
-                <div>
-                  <h4 style={{ fontWeight: 600, fontSize: '0.875rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.25rem', marginBottom: '1rem', color: 'var(--primary)', marginTop: '1.5rem' }}>Cấp tài khoản đăng nhập (Tùy chọn)</h4>
-                  <div className="grid-2">
-                    <div className="form-group">
-                      <label>Tên đăng nhập mới</label>
-                      <input type="text" className="form-control" placeholder="Tên đăng nhập" value={username} onChange={e => setUsername(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                      <label>Mật khẩu khởi tạo</label>
-                      <input type="password" className="form-control" placeholder="Mật khẩu" value={password} onChange={e => setPassword(e.target.value)} />
+                <div style={{ marginTop: '1.5rem' }}>
+                  <div className="form-group-checkbox" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                    <input
+                      type="checkbox"
+                      id="createAccountCheckbox"
+                      checked={createAccount}
+                      onChange={(e) => setCreateAccount(e.target.checked)}
+                      style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+                    />
+                    <label htmlFor="createAccountCheckbox" style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-main)', cursor: 'pointer', margin: 0 }}>
+                      Cấp tài khoản đăng nhập hệ thống
+                    </label>
+                  </div>
+
+                  <div className={`expandable-panel ${createAccount ? 'expanded' : ''}`}>
+                    <div className="expandable-content" style={{ borderTop: '1px dashed var(--border-color)', paddingTop: '1.25rem', marginBottom: '0.5rem' }}>
+                      <h4 style={{ fontWeight: 600, fontSize: '0.875rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.25rem', marginBottom: '1rem', color: 'var(--primary)' }}>Thông tin tài khoản</h4>
+                      <div className="grid-2">
+                        <div className="form-group">
+                          <label>Tên đăng nhập mới *</label>
+                          <input type="text" className="form-control" placeholder="Tên đăng nhập" value={username} onChange={e => setUsername(e.target.value)} required={createAccount} />
+                        </div>
+                        <div className="form-group">
+                          <label>Mật khẩu khởi tạo *</label>
+                          <input type="password" className="form-control" placeholder="Mật khẩu" value={password} onChange={e => setPassword(e.target.value)} required={createAccount} />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
