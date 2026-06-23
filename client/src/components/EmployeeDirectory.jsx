@@ -96,8 +96,10 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
       a.download = 'Danh_Sach_Nhan_Vien.xlsx';
       document.body.appendChild(a);
       a.click();
-      a.remove();
-      setTimeout(() => window.URL.revokeObjectURL(url), 100);
+      setTimeout(() => {
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }, 500);
       showToast('Tải file Excel thành công.');
     } catch (err) {
       console.error(err);

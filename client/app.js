@@ -730,8 +730,10 @@ document.addEventListener('DOMContentLoaded', () => {
       a.download = 'Danh_Sach_Nhan_Vien.xlsx';
       document.body.appendChild(a);
       a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+      setTimeout(() => {
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }, 500);
       showToast('Đã tải xuống file Excel.');
     } catch (err) {
       console.error(err);
