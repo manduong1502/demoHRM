@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_BASE_URL }) {
   const [employees, setEmployees] = useState([]);
@@ -406,7 +407,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
       </div>
 
       {/* Modal: Add/Edit Employee */}
-      {isEmpModalOpen && (
+      {isEmpModalOpen && createPortal(
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
@@ -519,10 +520,10 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
             </form>
           </div>
         </div>
-      )}
+      , document.body)}
 
       {/* Modal: Import Excel */}
-      {isImportModalOpen && (
+      {isImportModalOpen && createPortal(
         <div className="modal-overlay">
           <div className="modal-content" style={{ maxWidth: '460px' }}>
             <div className="modal-header">
@@ -558,7 +559,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
             </form>
           </div>
         </div>
-      )}
+      , document.body)}
     </div>
   );
 }

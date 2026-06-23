@@ -175,7 +175,7 @@ function App() {
   const renderActiveView = () => {
     switch (activeView) {
       case 'view-dashboard':
-        return <Dashboard stats={{ totalEmployees, todayAttendance, pendingLeaves }} />;
+        return <Dashboard stats={{ totalEmployees, todayAttendance, pendingLeaves }} setActiveView={setActiveView} />;
       case 'view-employees':
         return (
           <EmployeeDirectory
