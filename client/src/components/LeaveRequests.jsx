@@ -16,12 +16,23 @@ export default function LeaveRequests({ fetchAPI, userRole, showToast }) {
   const isApprover = userRole === 'Admin' || userRole === 'HR Manager' || userRole === 'Line Manager';
 
   const loadRequests = async () => {
+    const startTime = Date.now();
+    // Tránh giật màn hình (Skeleton flash) bằng cách chỉ hiện loading nếu API phản hồi lâu hơn 300ms
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 200);
+    }, 300);
     try {
       const q = statusFilter ? `?status=${statusFilter}` : '';
       const result = await fetchAPI(`/attendance/leave-requests${q}`);
+      
+      // Chờ ít nhất 250ms ở lần load đầu tiên để hiệu ứng chuyển trang (220ms) hoàn tất
+      if (isInitialLoad) {
+        const elapsed = Date.now() - startTime;
+        if (elapsed < 250) {
+          await new Promise(resolve => setTimeout(resolve, 250 - elapsed));
+        }
+      }
+
       setRequests(result);
     } catch (err) {
       console.error(err);

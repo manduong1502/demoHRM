@@ -20,14 +20,24 @@ export default function Timesheet({ fetchAPI, userRole }) {
   };
 
   const loadTimesheet = async () => {
+    const startTime = Date.now();
+    // Tránh giật màn hình (Skeleton flash) bằng cách chỉ hiện loading nếu API phản hồi lâu hơn 300ms
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 200);
+    }, 300);
     try {
       const recordsResult = await fetchAPI(`/attendance/timesheet?year=${year}&month=${month}`);
-      setRecords(recordsResult);
-
       const employeesResult = await fetchAPI('/employees?limit=200');
+      
+      // Chờ ít nhất 250ms ở lần load đầu tiên để hiệu ứng chuyển trang (220ms) hoàn tất
+      if (isInitialLoad) {
+        const elapsed = Date.now() - startTime;
+        if (elapsed < 250) {
+          await new Promise(resolve => setTimeout(resolve, 250 - elapsed));
+        }
+      }
+
+      setRecords(recordsResult);
       setEmployees(employeesResult.employees);
     } catch (err) {
       console.error(err);

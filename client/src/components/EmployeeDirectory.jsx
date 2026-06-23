@@ -46,14 +46,24 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
   const [searchTrigger, setSearchTrigger] = useState(0);
 
   const loadEmployees = async () => {
-    // Tránh giật màn hình (Skeleton flash) bằng cách chỉ hiện loading nếu API phản hồi lâu hơn 200ms
+    const startTime = Date.now();
+    // Tránh giật màn hình (Skeleton flash) bằng cách chỉ hiện loading nếu API phản hồi lâu hơn 300ms
     const timer = setTimeout(() => {
       setLoading(true);
-    }, 200);
+    }, 300);
 
     try {
       const qs = `?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}&department=${encodeURIComponent(department)}&status=${encodeURIComponent(status)}`;
       const result = await fetchAPI(`/employees${qs}`);
+      
+      // Chờ ít nhất 250ms ở lần load đầu tiên để hiệu ứng chuyển trang (220ms) hoàn tất
+      if (isInitialLoad) {
+        const elapsed = Date.now() - startTime;
+        if (elapsed < 250) {
+          await new Promise(resolve => setTimeout(resolve, 250 - elapsed));
+        }
+      }
+
       setEmployees(result.employees);
       setTotalItems(result.totalItems);
       setTotalPages(result.totalPages);
