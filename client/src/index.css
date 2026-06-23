@@ -14,7 +14,8 @@
   --info: #2563eb;
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --sidebar-width: 260px;
-  --transition-fast: 0.15s ease;
+  --transition-ease: 0.22s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: 0.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -144,12 +145,13 @@ button, input, select, textarea {
   border-radius: 8px;
   font-weight: 500;
   font-size: 0.9rem;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-ease);
 }
 
 .sidebar-menu a:hover, .sidebar-menu li.active a {
   background-color: #1e293b;
   color: #ffffff;
+  transform: translateX(4px);
 }
 
 .sidebar-menu a svg {
@@ -199,6 +201,11 @@ button, input, select, textarea {
   background-color: var(--danger);
   border-color: var(--danger);
   color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-logout:active {
+  transform: translateY(0) scale(0.98);
 }
 
 /* Main Content Area */
@@ -277,6 +284,14 @@ button, input, select, textarea {
   border: 1px solid transparent;
   cursor: pointer;
   transition: all var(--transition-fast);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn svg {
@@ -521,6 +536,13 @@ button, input, select, textarea {
   height: 100%;
   border-radius: 6px;
   font-weight: 600;
+  transition: transform var(--transition-fast), filter var(--transition-fast);
+}
+
+.day-cell-content:hover {
+  transform: scale(1.1);
+  filter: brightness(0.95);
+  cursor: pointer;
 }
 
 .cell-present { background-color: #dcfce7; color: #15803d; }
@@ -539,13 +561,13 @@ button, input, select, textarea {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 1.5rem;
+  animation: fadeInBg 0.2s var(--transition-ease) forwards;
 }
 
 .modal-content {
@@ -555,9 +577,11 @@ button, input, select, textarea {
   border: 1px solid var(--border-color);
   width: 100%;
   max-width: 640px;
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08), 0 4px 12px -5px rgba(0, 0, 0, 0.03);
   max-height: 90vh;
   overflow-y: auto;
+  animation: scaleUp 0.25s var(--transition-ease) forwards;
+  transform-origin: center;
 }
 
 .modal-header {
@@ -878,6 +902,74 @@ button, input, select, textarea {
 
   .auth-card h2 {
     font-size: 1.5rem;
+  }
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* View transition animations */
+.fade-in-view {
+  animation: fadeIn 0.22s var(--transition-ease) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInBg {
+  from { background-color: rgba(15, 23, 42, 0); }
+  to { background-color: rgba(15, 23, 42, 0.45); }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in-view, .modal-overlay, .modal-content {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .sidebar-menu a:hover, .btn:hover, .btn-logout:hover {
+    transform: none !important;
   }
 }
 

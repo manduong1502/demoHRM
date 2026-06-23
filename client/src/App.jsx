@@ -324,7 +324,9 @@ function App() {
         </header>
 
         <main className="main-content">
-          {renderActiveView()}
+          <div key={activeView} className="fade-in-view">
+            {renderActiveView()}
+          </div>
         </main>
       </div>
 
