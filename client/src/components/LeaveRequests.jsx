@@ -329,10 +329,10 @@ export default function LeaveRequests({ fetchAPI, userRole, showToast }) {
                         <td style={{ whiteSpace: 'nowrap' }}>
                           {req.status === 'pending' ? (
                             <div className="table-actions">
-                              <button onClick={() => handleApprove(req.id)} className="btn btn-success" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>
+                              <button onClick={() => handleApprove(req.id)} className="btn btn-success btn-table-action">
                                 Duyệt
                               </button>
-                              <button onClick={() => handleReject(req.id)} className="btn btn-danger" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>
+                              <button onClick={() => handleReject(req.id)} className="btn btn-danger btn-table-action">
                                 Từ chối
                               </button>
                             </div>

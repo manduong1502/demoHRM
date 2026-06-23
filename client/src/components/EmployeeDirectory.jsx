@@ -367,10 +367,10 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
                   {canEdit && (
                     <td style={{ whiteSpace: 'nowrap' }}>
                       <div className="table-actions">
-                        <button onClick={() => handleOpenEditModal(emp)} className="btn btn-secondary" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>
+                        <button onClick={() => handleOpenEditModal(emp)} className="btn btn-secondary btn-table-action">
                           Sửa
                         </button>
-                        <button onClick={() => handleDelete(emp.id)} className="btn btn-danger" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>
+                        <button onClick={() => handleDelete(emp.id)} className="btn btn-danger btn-table-action">
                           Xóa
                         </button>
                       </div>

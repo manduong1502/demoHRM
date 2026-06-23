@@ -348,6 +348,32 @@ select.form-control {
   background-color: #059669;
 }
 
+/* Focus outlines for better keyboard navigation accessibility */
+.btn:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #4f46e5 !important;
+  outline-offset: 2px !important;
+}
+
+/* Specific small action buttons in tables */
+.btn-table-action {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  min-height: 28px;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .btn-table-action {
+    padding: 0.5rem 0.75rem; /* Larger target area for mobile tap */
+    font-size: 0.825rem;
+    min-height: 42px; /* Meets mobile accessibility standards */
+  }
+}
+
 /* Filter Bar */
 .filter-bar {
   background-color: var(--bg-card);
@@ -372,7 +398,8 @@ select.form-control {
   background-color: var(--bg-card);
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
 }
 
