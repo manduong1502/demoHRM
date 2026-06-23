@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 export default function LeaveRequests({ fetchAPI, userRole, showToast }) {
   const [requests, setRequests] = useState([]);
   const [statusFilter, setStatusFilter] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Form states
   const [requestType, setRequestType] = useState('leave_paid');
@@ -14,12 +16,19 @@ export default function LeaveRequests({ fetchAPI, userRole, showToast }) {
   const isApprover = userRole === 'Admin' || userRole === 'HR Manager' || userRole === 'Line Manager';
 
   const loadRequests = async () => {
+    const timer = setTimeout(() => {
+      setLoading(true);
+    }, 200);
     try {
       const q = statusFilter ? `?status=${statusFilter}` : '';
       const result = await fetchAPI(`/attendance/leave-requests${q}`);
       setRequests(result);
     } catch (err) {
       console.error(err);
+    } finally {
+      clearTimeout(timer);
+      setLoading(false);
+      setIsInitialLoad(false);
     }
   };
 
@@ -235,7 +244,21 @@ export default function LeaveRequests({ fetchAPI, userRole, showToast }) {
               </tr>
             </thead>
             <tbody>
-              {requests.length === 0 ? (
+              {isInitialLoad && !loading ? (
+                [...Array(3).keys()].map((i) => (
+                  <tr key={i}>
+                    <td colSpan={isApprover ? 7 : 6} style={{ height: '53px' }}>&nbsp;</td>
+                  </tr>
+                ))
+              ) : loading ? (
+                [...Array(3).keys()].map((i) => (
+                  <tr key={i}>
+                    <td colSpan={isApprover ? 7 : 6} style={{ padding: '1rem' }}>
+                      <div className="skeleton-line skeleton-shimmer" style={{ width: '100%' }}></div>
+                    </td>
+                  </tr>
+                ))
+              ) : requests.length === 0 ? (
                 <tr>
                   <td colSpan={isApprover ? 7 : 6} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
                     Không tìm thấy đơn từ nào.

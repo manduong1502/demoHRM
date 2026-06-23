@@ -5,6 +5,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   
   // Filters state
   const [search, setSearch] = useState('');
@@ -61,6 +62,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
     } finally {
       clearTimeout(timer);
       setLoading(false);
+      setIsInitialLoad(false);
     }
   };
 
@@ -314,7 +316,13 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isInitialLoad && !loading ? (
+              [...Array(5).keys()].map((i) => (
+                <tr key={i}>
+                  <td colSpan={canEdit ? 9 : 8} style={{ height: '53px' }}>&nbsp;</td>
+                </tr>
+              ))
+            ) : loading ? (
               [...Array(5).keys()].map((i) => (
                 <tr key={i}>
                   <td colSpan={canEdit ? 9 : 8} style={{ padding: '1rem 1.5rem' }}>

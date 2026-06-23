@@ -7,6 +7,8 @@ export default function Timesheet({ fetchAPI, userRole }) {
   const [records, setRecords] = useState([]);
   const [deptFilter, setDeptFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Local date helper
   const getLocalDateString = (dateInput) => {
@@ -18,6 +20,9 @@ export default function Timesheet({ fetchAPI, userRole }) {
   };
 
   const loadTimesheet = async () => {
+    const timer = setTimeout(() => {
+      setLoading(true);
+    }, 200);
     try {
       const recordsResult = await fetchAPI(`/attendance/timesheet?year=${year}&month=${month}`);
       setRecords(recordsResult);
@@ -26,6 +31,10 @@ export default function Timesheet({ fetchAPI, userRole }) {
       setEmployees(employeesResult.employees);
     } catch (err) {
       console.error(err);
+    } finally {
+      clearTimeout(timer);
+      setLoading(false);
+      setIsInitialLoad(false);
     }
   };
 
@@ -139,7 +148,21 @@ export default function Timesheet({ fetchAPI, userRole }) {
             </tr>
           </thead>
           <tbody>
-            {filteredEmployees.length === 0 ? (
+            {isInitialLoad && !loading ? (
+              [...Array(5).keys()].map((i) => (
+                <tr key={i}>
+                  <td colSpan={daysInMonth + 1} style={{ height: '53px' }}>&nbsp;</td>
+                </tr>
+              ))
+            ) : loading ? (
+              [...Array(5).keys()].map((i) => (
+                <tr key={i}>
+                  <td colSpan={daysInMonth + 1} style={{ padding: '1rem' }}>
+                    <div className="skeleton-line skeleton-shimmer" style={{ width: '100%' }}></div>
+                  </td>
+                </tr>
+              ))
+            ) : filteredEmployees.length === 0 ? (
               <tr>
                 <td colSpan={daysInMonth + 1} style={{ padding: '3rem', color: 'var(--text-muted)', textAlign: 'center' }}>
                   Không tìm thấy hồ sơ nhân sự nào phù hợp bộ lọc.
