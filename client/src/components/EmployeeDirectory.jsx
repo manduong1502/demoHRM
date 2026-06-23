@@ -97,7 +97,7 @@ export default function EmployeeDirectory({ fetchAPI, userRole, showToast, API_B
       document.body.appendChild(a);
       a.click();
       a.remove();
-      window.URL.revokeObjectURL(url);
+      setTimeout(() => window.URL.revokeObjectURL(url), 100);
       showToast('Tải file Excel thành công.');
     } catch (err) {
       console.error(err);

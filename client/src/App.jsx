@@ -47,23 +47,39 @@ function App() {
 
     const response = await fetch(url, config);
 
-    // Excel downloads MIME validation
     const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
-      if (!response.ok) throw new Error('Tải tệp tin thất bại.');
+
+    // If successful and response is not JSON (e.g. Excel binary), return as blob
+    if (response.ok && contentType && !contentType.includes('application/json')) {
       return await response.blob();
     }
-
-    const data = await response.json();
 
     if (!response.ok) {
       if (response.status === 401) {
         handleLogout();
       }
-      showToast(data.message || 'Có lỗi xảy ra', 'danger');
-      throw new Error(data.message || 'Có lỗi xảy ra');
+      let errorMsg = 'Có lỗi xảy ra';
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const errorData = await response.json();
+          errorMsg = errorData.message || errorMsg;
+        } catch (e) {}
+      } else {
+        try {
+          const textData = await response.text();
+          if (textData && textData.length < 200) {
+            errorMsg = textData;
+          } else {
+            errorMsg = `Lỗi hệ thống (${response.status})`;
+          }
+        } catch (e) {}
+      }
+      showToast(errorMsg, 'danger');
+      throw new Error(errorMsg);
     }
 
+    // Parse JSON for regular success responses
+    const data = await response.json();
     return data;
   };
 
