@@ -252,7 +252,7 @@ function App() {
           </li>
           <li className={activeView === 'view-leaves' ? 'active' : ''}>
             <a href="#" onClick={(e) => { e.preventDefault(); setActiveView('view-leaves'); setIsSidebarOpen(false); }}>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
               </svg>
               Đơn từ nghỉ phép / OT
@@ -261,7 +261,7 @@ function App() {
           {/* Skeletal Navigation Links */}
           <li className={activeView === 'view-salary' ? 'active' : ''}>
             <a href="#" onClick={(e) => { e.preventDefault(); setActiveView('view-salary'); setIsSidebarOpen(false); }}>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
               Tính lương & Phúc lợi
@@ -269,7 +269,7 @@ function App() {
           </li>
           <li className={activeView === 'view-kpi' ? 'active' : ''}>
             <a href="#" onClick={(e) => { e.preventDefault(); setActiveView('view-kpi'); setIsSidebarOpen(false); }}>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path>
               </svg>
               Đánh giá KPI
@@ -277,7 +277,7 @@ function App() {
           </li>
           <li className={activeView === 'view-reports' ? 'active' : ''}>
             <a href="#" onClick={(e) => { e.preventDefault(); setActiveView('view-reports'); setIsSidebarOpen(false); }}>
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"></path>
               </svg>
               Báo cáo tổng hợp
@@ -309,13 +309,13 @@ function App() {
           </div>
           <div className="flex gap-sm">
             <button onClick={handleQuickCheckIn} className="btn btn-success check-btn">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
               <span>Check-In</span>
             </button>
             <button onClick={handleQuickCheckOut} className="btn btn-primary check-btn">
-              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
               </svg>
               <span>Check-Out</span>

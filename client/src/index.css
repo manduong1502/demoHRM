@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
   --bg-primary: #f8fafc;
@@ -12,7 +12,7 @@
   --warning: #ea580c;
   --danger: #dc2626;
   --info: #2563eb;
-  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: 'Inter', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --sidebar-width: 260px;
   --transition-ease: 0.22s cubic-bezier(0.25, 1, 0.5, 1);
   --transition-fast: 0.1s cubic-bezier(0.22, 1, 0.36, 1);
@@ -444,13 +444,19 @@ button, input, select, textarea {
   border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.widget-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 .widget-title {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -460,6 +466,158 @@ button, input, select, textarea {
   font-weight: 700;
   color: var(--text-main);
   line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.widget-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.widget-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+.widget-icon-wrapper svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Card custom colors and details */
+.card-indigo {
+  border-left: 4px solid #4f46e5 !important;
+  background: linear-gradient(to right, rgba(79, 70, 229, 0.015), transparent) !important;
+}
+
+.icon-indigo {
+  background-color: rgba(79, 70, 229, 0.08);
+  color: #4f46e5;
+}
+
+.card-success {
+  border-left: 4px solid #16a34a !important;
+  background: linear-gradient(to right, rgba(22, 163, 74, 0.015), transparent) !important;
+}
+
+.icon-success {
+  background-color: rgba(22, 163, 74, 0.08);
+  color: #16a34a;
+}
+
+.card-warning {
+  border-left: 4px solid #ea580c !important;
+  background: linear-gradient(to right, rgba(234, 88, 12, 0.015), transparent) !important;
+}
+
+.icon-warning {
+  background-color: rgba(234, 88, 12, 0.08);
+  color: #ea580c;
+}
+
+/* Activity feed polish */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-fast);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activity-item:first-child {
+  padding-top: 0;
+}
+
+.activity-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.activity-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.avatar-success {
+  background-color: rgba(22, 163, 74, 0.08);
+  color: #16a34a;
+  border-color: rgba(22, 163, 74, 0.15);
+}
+
+.avatar-warning {
+  background-color: rgba(234, 88, 12, 0.08);
+  color: #ea580c;
+  border-color: rgba(234, 88, 12, 0.15);
+}
+
+.avatar-info {
+  background-color: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.15);
+}
+
+.avatar-primary {
+  background-color: rgba(79, 70, 229, 0.08);
+  color: #4f46e5;
+  border-color: rgba(79, 70, 229, 0.15);
+}
+
+.avatar-secondary {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border-color: #cbd5e1;
+}
+
+.activity-details-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-user {
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.activity-action {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.activity-subtext {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.activity-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 /* Timesheet Month Grid */
