@@ -390,8 +390,13 @@ button, input, select, textarea {
   color: var(--text-main);
 }
 
-.table-excel tr:hover {
-  background-color: #f1f5f9;
+/* Table action button wrapper to prevent wrapping onto multiple lines */
+.table-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 }
 
 /* Badges */
@@ -698,8 +703,6 @@ button, input, select, textarea {
 }
 
 .day-cell-content:hover {
-  transform: scale(1.1);
-  filter: brightness(0.95);
   cursor: pointer;
 }
 

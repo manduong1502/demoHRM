@@ -306,16 +306,16 @@ export default function LeaveRequests({ fetchAPI, userRole, showToast }) {
                         </span>
                       </td>
                       {isApprover && (
-                        <td>
+                        <td style={{ whiteSpace: 'nowrap' }}>
                           {req.status === 'pending' ? (
-                            <>
+                            <div className="table-actions">
                               <button onClick={() => handleApprove(req.id)} className="btn btn-success" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>
                                 Duyệt
                               </button>
-                              <button onClick={() => handleReject(req.id)} className="btn btn-danger" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', marginLeft: '0.25rem' }}>
+                              <button onClick={() => handleReject(req.id)} className="btn btn-danger" style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}>
                                 Từ chối
                               </button>
-                            </>
+                            </div>
                           ) : (
                             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                               Duyệt bởi: {req.approver ? req.approver.username : 'Hệ thống'}
